@@ -20,7 +20,8 @@ public class ATMMenu {
                 System.out.println("=================================");
                 System.out.print("How much do you need to withdraw: ");
                 int chooseWithdrawAmount = sc.nextInt();
-//                withdraw(chooseWithdrawAmount);
+//                new AtmServiceFunction().withdraw(chooseWithdrawAmount);
+                AtmServiceFunction.withdraw1(chooseWithdrawAmount);
             }else if(choice == 2){
                 System.out.println("=================================");
                 System.out.println("This function is currently unavailable");
