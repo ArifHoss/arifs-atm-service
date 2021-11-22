@@ -8,10 +8,6 @@ public class AtmServiceFunction {
         calculateBalance();
     }
 
-    public AtmServiceFunction() {
-
-    }
-
     public static void calculateBalance() {
         for (int i = 0; i < banknotes.length; i++) {
             balance = balance + (banknotes[i] * amountOfEachNotes[i]);
@@ -26,34 +22,48 @@ public class AtmServiceFunction {
         System.out.println("Total balance = " + balance);
     }
 
+    public static void showTotalBalance() {
+        System.out.println("Total balance: " + balance);
+    }
 
-    public synchronized void withdraw(int chooseWithdrawAmount) {
-        if (chooseWithdrawAmount > balance) {
+
+    public static void withdraw(int chooseWithdrawAmount) {
+
+        int withdrawRequest = chooseWithdrawAmount;
+        int secondLastDigit = (withdrawRequest % 100) / 10;
+
+        if (chooseWithdrawAmount > balance || secondLastDigit != 0) {
             System.out.println("This amount is not available! Try again!");
 
         } else {
             for (int i = 0; i < banknotes.length; i++) {
-                if (banknotes[i] < chooseWithdrawAmount || chooseWithdrawAmount % 100 != 0) {
+                if (banknotes[i] <= chooseWithdrawAmount) {
                     int countNotes = chooseWithdrawAmount / banknotes[i];
                     if (amountOfEachNotes[i] > 0) {
-                        counter[i] = countNotes >= amountOfEachNotes[i] ? amountOfEachNotes[i] : countNotes;
+//                        counter[i] = countNotes >= amountOfEachNotes[i] ? amountOfEachNotes[i] : countNotes;
+                        counter[i] = Math.min(countNotes, amountOfEachNotes[i]);
                         amountOfEachNotes[i] = countNotes >= amountOfEachNotes[i] ? 0 : amountOfEachNotes[i] - countNotes;
                         balance = balance - (counter[i] * banknotes[i]);
                         chooseWithdrawAmount = chooseWithdrawAmount - (counter[i] * banknotes[i]);
                     }
                 }
-
             }
             showWithdrawAmount();
             showLeftBanknotes();
-
-
         }
-
     }
 
     public static void withdraw1(int chooseWithdrawAmount) {
-        if (chooseWithdrawAmount <= balance) {
+        int withdrawRequest=chooseWithdrawAmount;
+        int secondLastDigit=(withdrawRequest % 100) / 10;
+        System.out.println(secondLastDigit);
+
+        if (chooseWithdrawAmount > balance) {
+            System.out.println("This amount is not available! Try again!");
+
+        } else if (secondLastDigit !=0){
+            System.out.println("Notes for this amount not available");
+        } else {
             for (int i = 0; i < banknotes.length; i++) {
                 if (banknotes[i] <= chooseWithdrawAmount) {
                     int addNotes = chooseWithdrawAmount / banknotes[i];
@@ -72,21 +82,18 @@ public class AtmServiceFunction {
 
     }
 
-
-    private static void showLeftBanknotes() {
-        for (int i = 0; i < banknotes.length; i++) {
-            System.out.println("Notes of " + banknotes[i] + " left are " + amountOfEachNotes[i]);
-
-        }
-    }
-
     private static void showWithdrawAmount() {
         for (int i = 0; i < counter.length; i++) {
             if (counter[i] != 0) {
                 System.out.println(banknotes[i] + " * " + counter[i] + " = " + (banknotes[i] * counter[i]));
             }
-
         }
     }
 
+    public static void showLeftBanknotes() {
+        for (int i = 0; i < banknotes.length; i++) {
+            System.out.println("Notes of " + banknotes[i] + " left are " + amountOfEachNotes[i]);
+
+        }
+    }
 }
