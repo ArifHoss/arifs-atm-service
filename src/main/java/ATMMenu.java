@@ -19,7 +19,7 @@ public class ATMMenu {
                 =================================
                 """);
 
-            System.out.print("Please make a choice:");
+            System.out.print("Please make a choice: ");
             int choice = sc.nextInt();
 
             switch (choice) {
@@ -50,9 +50,8 @@ public class ATMMenu {
 
     private static void initiateWithdraw() {
         System.out.println("=================================");
-        System.out.print("How much do you need to withdraw: ");
+        System.out.print("How much do you want to withdraw: ");
         int chooseWithdrawAmount = sc.nextInt();
-        AtmServiceFunction.numberOfEachBillToPayOut = new int[]{0, 0, 0};
         AtmServiceFunction.withdraw(chooseWithdrawAmount);
     }
 }
